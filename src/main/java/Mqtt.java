@@ -80,7 +80,7 @@ public class Mqtt {
   public static void main(String[] args) throws Exception {
  
  //1. Create the spark streaming context with a 10 second batch size
-SparkConf sparkConf = new SparkConf().setAppName("SparkStreamingMqttTest").setMaster("spark://master:7077").set("spark.driver.allowMultipleContexts", "true").set("spark.cassandra.connection.host", "52.90.114.29");
+SparkConf sparkConf = new SparkConf().setAppName("SparkStreamingMqttTest").setMaster("local[2]").set("spark.driver.allowMultipleContexts", "true").set("spark.cassandra.connection.host", "52.90.114.29");
 final JavaSparkContext sc=new JavaSparkContext(sparkConf);
 JavaStreamingContext ssc = new JavaStreamingContext(sc, Durations.seconds(10));
 CassandraConnector connector = CassandraConnector.apply(sc.getConf());
