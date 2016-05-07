@@ -83,11 +83,11 @@ public class Mqtt {
 SparkConf sparkConf = new SparkConf().setAppName("SparkStreamingMqttTest").setMaster("local[2]").set("spark.driver.allowMultipleContexts", "true").set("spark.cassandra.connection.host", "52.90.114.29");
 final JavaSparkContext sc=new JavaSparkContext(sparkConf);
 JavaStreamingContext ssc = new JavaStreamingContext(sc, Durations.seconds(10));
-CassandraConnector connector = CassandraConnector.apply(sc.getConf());
+/*CassandraConnector connector = CassandraConnector.apply(sc.getConf());
 try (Session session = connector.openSession()) {
 session.execute("CREATE KEYSPACE testkeyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}");
 session.execute("CREATE TABLE testkeyspace.test_table (id INT PRIMARY KEY,count INT, word TEXT)");
-}
+}*/
 //2. MQTTUtils to collect MQTT messages
 String brokerUrl = "tcp://52.73.161.142:1883";
 String topic = "Spark/wordcount";
