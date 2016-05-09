@@ -29,16 +29,16 @@ import scala.Tuple2;
  
 public class Mqtt {
  
-  private static int sum=0;
+
  
   public static class Count implements Serializable {
       
 		private static final long serialVersionUID = 858977299556976470L;
 		private String word;
         private int count;
-        private int id;
+        private long id;
 
-        public static Count newInstance(int id, int count,String name) {
+        public static Count newInstance(long id, int count,String name) {
             Count Count = new Count();
             
             Count.setWord(name);
@@ -64,11 +64,11 @@ public class Mqtt {
         public void setCount(int count) {
             this.count = count;
         }
-        public int getid() {
+        public long getid() {
             return id;
         }
 
-        public void setid(int eventTime) {
+        public void setid( long id) {
             this.id = id;
         }
         @Override
@@ -85,8 +85,8 @@ final JavaSparkContext sc=new JavaSparkContext(sparkConf);
 JavaStreamingContext ssc = new JavaStreamingContext(sc, Durations.seconds(10));
 /*CassandraConnector connector = CassandraConnector.apply(sc.getConf());
 try (Session session = connector.openSession()) {
-session.execute("CREATE KEYSPACE testkeyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}");
-session.execute("CREATE TABLE testkeyspace.test_table (id INT PRIMARY KEY,count INT, word TEXT)");
+//session.execute("CREATE KEYSPACE testkeyspace WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}");
+session.execute("CREATE TABLE testkeyspace.testtable (id BIGINT PRIMARY KEY,count INT, word TEXT)");
 }*/
 //2. MQTTUtils to collect MQTT messages
 String brokerUrl = "tcp://52.73.161.142:1883";
@@ -128,11 +128,11 @@ JavaPairDStream<String, Integer> pairs = words.mapToPair(
 		            	for(int i=0;i<result.size();i++){
 		            		String[] sa=result.get(i).toString().split(",");
 		            		
-		            		al.add(Count.newInstance(sum,Integer.parseInt(sa[1].substring(0, sa[1].length()-1)), sa[0].substring(1)));
-		            		sum++;
+		            		al.add(Count.newInstance(System.currentTimeMillis()/1000,Integer.parseInt(sa[1].substring(0, sa[1].length()-1)), sa[0].substring(1)));
+		            		
 		            	}
 		            	JavaRDD rdd = sc.parallelize(al);
-		            	javaFunctions(rdd).writerBuilder("testkeyspace", "test_table", mapToRow(Count.class)).saveToCassandra();
+		            	javaFunctions(rdd).writerBuilder("testkeyspace", "testtable", mapToRow(Count.class)).saveToCassandra();
 		            	
 		        }
 					return null;
