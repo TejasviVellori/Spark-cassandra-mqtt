@@ -6,6 +6,105 @@
   <artifactId>Spark-Cassandra-Mqtt</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Spark-Example</name>
+  
+    <url>http://maven.apache.org</url>
+
+
+
+    <properties>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    </properties>
+
+
+
+    <build>
+
+        <plugins>
+
+            <plugin>
+
+                <groupId>org.apache.maven.plugins</groupId>
+
+                <artifactId>maven-compiler-plugin</artifactId>
+
+                <version>2.3.2</version>
+
+                <configuration>
+
+                    <source>1.7</source>
+
+                    <target>1.7</target>
+
+                </configuration>
+
+            </plugin>
+
+            <plugin>
+
+                <groupId>org.apache.maven.plugins</groupId>
+
+                <artifactId>maven-jar-plugin</artifactId>
+
+                <version>2.4</version>
+
+                <configuration>
+
+                    <archive>
+
+                        <manifest>
+
+                            <addClasspath>true</addClasspath>
+
+                            <classpathPrefix>lib/</classpathPrefix>
+
+                            <mainClass>com.geekcap.storm.PrimeNumberTopology</mainClass>
+
+                        </manifest>
+
+                    </archive>
+
+                </configuration>
+
+            </plugin>
+
+            <plugin>
+
+                <groupId>org.apache.maven.plugins</groupId>
+
+                <artifactId>maven-dependency-plugin</artifactId>
+
+                <executions>
+
+                    <execution>
+
+                        <id>copy</id>
+
+                        <phase>install</phase>
+
+                        <goals>
+
+                            <goal>copy-dependencies</goal>
+
+                        </goals>
+
+                        <configuration>
+
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+
+                        </configuration>
+
+                    </execution>
+
+                </executions>
+
+            </plugin>
+
+        </plugins>
+
+    </build>
+
   <repositories>
   <repository>
 			<id>paho-mqtt-client</id>
@@ -57,100 +156,5 @@
     </dependencies>
 
    
-    <build>
-
-        <plugins>
-
-            <plugin>
-
-                <groupId>org.apache.maven.plugins</groupId>
-
-                <artifactId>maven-compiler-plugin</artifactId>
-
-                <version>2.3.2</version>
-
-                <configuration>
-
-                    <source>1.7</source>
-
-                    <target>1.7</target>
-
-                </configuration>
-
-            </plugin>
-
-            <plugin>
-
-                <groupId>org.apache.maven.plugins</groupId>
-
-                <artifactId>maven-jar-plugin</artifactId>
-
-                <version>2.4</version>
-
-                <configuration>
-
-                   
-
-                </configuration>
-
-            </plugin>
-<plugin>
-        <artifactId>maven-assembly-plugin</artifactId>
-
-        <configuration>
-          <descriptorRefs>
-            <descriptorRef>jar-with-dependencies</descriptorRef>
-          </descriptorRefs>
-          <archive>
-            <manifest>
-              <mainClass></mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-        
-        <executions>
-          <execution>
-            <id>make-assembly</id>
-            <phase>package</phase>
-            <goals>
-              <goal>single</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>      
-            <plugin>
-
-                <groupId>org.apache.maven.plugins</groupId>
-
-                <artifactId>maven-dependency-plugin</artifactId>
-
-                <executions>
-
-                    <execution>
-
-                        <id>copy</id>
-
-                        <phase>install</phase>
-
-                        <goals>
-
-                            <goal>copy-dependencies</goal>
-
-                        </goals>
-
-                        <configuration>
-
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-
-                        </configuration>
-
-                    </execution>
-
-                </executions>
-
-            </plugin>
-
-        </plugins>
-
-    </build>  
+    
 </project>
